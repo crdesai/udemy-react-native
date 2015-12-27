@@ -20,9 +20,9 @@ var Weekdays = React.createClass({
   	var dayItems = [];
   	for(var i=0; i<7; i++) {
   		var day = Moment().add(i, 'days').format('dddd');
-  		dayItems.push([
+  		dayItems.push(
   			<DayItem day={day} key={day} daysUntil={i} />
-  		]);
+  		);
   	}
   	return dayItems;
   }
