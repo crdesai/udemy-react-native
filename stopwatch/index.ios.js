@@ -12,7 +12,9 @@ var StopWatch = React.createClass({
   getInitialState: function() {
     return {
       timeElapsed: null,
-      timerRunning: false
+      timerRunning: false,
+      startTime: null,
+      laps: []
     }
   },
   render: function(){
@@ -31,9 +33,9 @@ var StopWatch = React.createClass({
       </View>
 
       <View style={styles.footer}>{/* Lap Value sections */}
-        <Text>
-          Lap Values
-        </Text>
+        
+        {this.renderLaps()}
+        
       </View>
     </View>
   },
@@ -50,11 +52,26 @@ var StopWatch = React.createClass({
       </TouchableHighlight>
   },
   lapButton: function(){
-    return <View style={styles.button}>
+    return <TouchableHighlight 
+          style={styles.button}
+          underlayColor = "gray"
+          onPress = {this.handleLapPress}>
         <Text>
           Lap
         </Text>
-      </View>
+      </TouchableHighlight>
+  },
+  renderLaps: function() {
+    return this.state.laps.map(function(lap, index) {
+        return <View key={lap} style={styles.lap}>
+          <Text style={styles.lapText}>
+            Lap #{index + 1}
+          </Text>
+          <Text style={styles.lapText}>
+            {FormatTime(lap)}
+          </Text>
+        </View>
+    });
   },
   handleStartPress: function() {
 
@@ -66,15 +83,23 @@ var StopWatch = React.createClass({
 
       return false;
     }
-    var startTime = new Date();
+    this.setState({startTime: new Date()});
 
     this.interval = setInterval(() => {
       this.setState({
-        timeElapsed: new Date() - startTime,
+        timeElapsed: new Date() - this.state.startTime,
         running: true
       });
     }, 30);
     
+  },
+  handleLapPress: function() {
+    var lap = this.state.timeElapsed;
+    this.setState({
+      startTime: new Date(),
+      laps: this.state.laps.concat([lap])
+    });
+
   }
 });
 
@@ -118,6 +143,15 @@ var styles = StyleSheet.create({
   },
   stopButton: {
     borderColor: '#CC0000'
+  },
+  lap: {
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    backgroundColor: 'grey',
+    marginBottom: 2
+  },
+  lapText: {
+    fontSize: 30
   }
 });
 
