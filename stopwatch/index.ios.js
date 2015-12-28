@@ -17,19 +17,19 @@ var StopWatch = React.createClass({
   render: function(){
     return <View style={styles.container}>
 
-      <View style={[styles.header, this.border('yellow')]}>{/* Timer and Buttons */}
-        <View style={[styles.timerWrapper, this.border('red')]}>{/* Timer */}
-          <Text>
+      <View style={styles.header}>{/* Timer and Buttons */}
+        <View style={styles.timerWrapper}>{/* Timer */}
+          <Text style={styles.timer}>
             {FormatTime(this.state.timeElapsed)}
           </Text>
         </View>
-        <View style={[styles.buttonWrapper, this.border('green')]}>{/* Buttons */}
+        <View style={styles.buttonWrapper}>{/* Buttons */}
           {this.startStopButton()}
           {this.lapButton()}
         </View>
       </View>
 
-      <View style={[styles.footer, this.border('blue')]}>{/* Lap Value sections */}
+      <View style={styles.footer}>{/* Lap Value sections */}
         <Text>
           Lap Values
         </Text>
@@ -39,24 +39,19 @@ var StopWatch = React.createClass({
   startStopButton: function(){
     return <TouchableHighlight 
           underlayColor="gray"
-          onPress={this.handleStartPress}>
+          onPress={this.handleStartPress}
+          style={[styles.button, styles.startButton]}>
         <Text>
           Start
         </Text>
       </TouchableHighlight>
   },
   lapButton: function(){
-    return <View>
+    return <View style={styles.button}>
         <Text>
           Lap
         </Text>
       </View>
-  },
-  border: function(color) {
-    return {
-      borderColor: color,
-      borderWidth: 4
-    }
   },
   handleStartPress: function() {
     var startTime = new Date();
@@ -93,6 +88,20 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center'
+  },
+  timer: {
+    fontSize: 60
+  },
+  button: {
+    borderWidth: 2,
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  startButton: {
+    borderColor: 'green'
   }
 });
 
