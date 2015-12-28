@@ -8,19 +8,21 @@ var {
 
 var StopWatch = React.createClass({
   render: function(){
-    return <View>
-      <View>{/* Timer and Buttons */}
-        <View>{/* Timer */}
+    return <View style={styles.container}>
+
+      <View style={[styles.header, this.border('yellow')]}>{/* Timer and Buttons */}
+        <View style={this.border('red')}>{/* Timer */}
           <Text>
             00 : 00 : 00
           </Text>
         </View>
-        <View>{/* Buttons */}
+        <View style={this.border('green')}>{/* Buttons */}
           {this.startStopButton()}
           {this.lapButton()}
         </View>
       </View>
-      <View>{/* Lap Value sections */}
+
+      <View style={[styles.footer, this.border('blue')]}>{/* Lap Value sections */}
         <Text>
           Lap Values
         </Text>
@@ -40,6 +42,12 @@ var StopWatch = React.createClass({
           Lap
         </Text>
       </View>
+  },
+  border: function(color) {
+    return {
+      borderColor: color,
+      borderWidth: 4
+    }
   }
 });
 
