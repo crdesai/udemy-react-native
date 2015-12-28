@@ -1,19 +1,26 @@
 var React = require('react-native');
+var FormatTime = require('minutes-seconds-milliseconds');
 var {
   Text,
   View,
+  TouchableHighlight,
   AppRegistry,
   StyleSheet
 } = React;
 
 var StopWatch = React.createClass({
+  getInitialState: function() {
+    return {
+      timeElapsed: null
+    }
+  },
   render: function(){
     return <View style={styles.container}>
 
       <View style={[styles.header, this.border('yellow')]}>{/* Timer and Buttons */}
         <View style={[styles.timerWrapper, this.border('red')]}>{/* Timer */}
           <Text>
-            00 : 00 : 00
+            {FormatTime(this.state.timeElapsed)}
           </Text>
         </View>
         <View style={[styles.buttonWrapper, this.border('green')]}>{/* Buttons */}
@@ -30,11 +37,13 @@ var StopWatch = React.createClass({
     </View>
   },
   startStopButton: function(){
-    return <View>
+    return <TouchableHighlight 
+          underlayColor="gray"
+          onPress={this.handleStartPress}>
         <Text>
           Start
         </Text>
-      </View>
+      </TouchableHighlight>
   },
   lapButton: function(){
     return <View>
@@ -48,6 +57,16 @@ var StopWatch = React.createClass({
       borderColor: color,
       borderWidth: 4
     }
+  },
+  handleStartPress: function() {
+    var startTime = new Date();
+
+    setInterval(() => {
+      this.setState({
+        timeElapsed: new Date() - startTime
+      });
+    }, 30);
+    
   }
 });
 
