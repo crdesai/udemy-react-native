@@ -18,7 +18,7 @@ var DayItem = React.createClass({
 		}
 	},
 	color: function(){
-		var opacity = 1 / this.props.daysUntil;
+		var opacity = 1 / (this.props.daysUntil+1);
 		return 'rgba(0,0,255, ' + opacity + ')';
 	},
 	fontWeight: function(){
@@ -32,5 +32,12 @@ var DayItem = React.createClass({
 		return 70 - 4 * this.props.daysUntil;
 	}
 });
+
+var styles = StyleSheet.create({
+	day: {
+		color: '#0000ff',
+		fontSize: 18
+	}
+})
 
 module.exports = DayItem;
